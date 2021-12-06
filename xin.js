@@ -96,7 +96,7 @@ let activityCookie =''
     return;
   }
   $.activityId = "dd202112054tv7ur9e458rmdh"
-  $.shareUuid = ""
+  $.shareUuid = "463f877a91dd49ac8581c6a8e45c1b12"
   console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/customized/common/activity?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
 
 
