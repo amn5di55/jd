@@ -142,7 +142,8 @@ async function queryInteractiveRewardInfo(encryptProjectId, sourceCode, type) {
                     }
                   } if (sum < 5) {
                         console.log(`1魔方不兑换`);
-                        await $.wait(1500);
+                        await $.wait(100);
+						break;
                   }
                 }
               } else {
