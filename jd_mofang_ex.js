@@ -141,13 +141,8 @@ async function queryInteractiveRewardInfo(encryptProjectId, sourceCode, type) {
                       }
                     }
                   } if (sum < 5) {
-                    if (vo.exchangeRate == 1) {
-                      for (let i = 0; i < sum; i++) {
-                        console.log(`开始1魔方第${i + 1}次兑换`);
-                        await doInteractiveAssignment($.config.giftConfig.projectId, vo.encryptAssignmentId, "acexinpin0823", 1);
+                        console.log(`1魔方不兑换`);
                         await $.wait(1500);
-                      }
-                    }
                   }
                 }
               } else {
