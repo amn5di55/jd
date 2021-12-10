@@ -1,8 +1,8 @@
 /*
-暖暖红包
-0 0,12 * * * jd_redEnvelope.js
+京享红包
+0 0,12,18,20 * * * jd_redEnvelope.js
 */
-const $ = new Env("暖暖红包");
+const $ = new Env("京享红包");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 let cookiesArr = [];
 if ($.isNode()) {
@@ -14,8 +14,8 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-let codeLsit = ['nLWtihl','nLWtihl','nLWtihl']
-$.code = codeLsit[random(0, codeLsit.length)];
+let cookie = "";
+$.code = "nLWtihl";
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取", "https://bean.m.jd.com/bean/signIndex.action", { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -74,7 +74,7 @@ async function main() {
     let arr = getBody($.UA, $.url2);
     await getEid(arr);
     console.log(`$.actId:` + $.actId);
-    await getcouponUrl()
+
     if ($.eid) {
       await getCoupons("");
     }
@@ -82,41 +82,6 @@ async function main() {
   }
 }
 
-function getcouponUrl() {
-  return new Promise((resolve) => {
-    const options = {
-      url: $.url2,
-      headers: {
-        "Host": "prodev.m.jd.com",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "User-Agent": $.UA,
-        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Cookie": cookie
-      },
-    };
-    $.post(options, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${$.toStr(err)}`);
-          console.log(`${$.name} getcouponUrl API请求失败，请检查网路重试`);
-        } else {
-          if (data) {
-            if ($.code === "nt5zCmM" || $.code === "nLhu1LP" || $.code === "ndhM07k") {
-              $.couponUrl = (data.match(/"value":"(.*)"\}'/) && data.match(/"value":"(.*)"\}'/)[1]) || ''
-            } else {
-              $.couponUrl = ''
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve(data);
-      }
-    });
-  });
-}
 function getEid(arr) {
   return new Promise((resolve) => {
     const options = {
@@ -160,7 +125,7 @@ function randomString(e) {
 async function getCoupons() {
   return new Promise((resolve) => {
     let opts = {
-      url: `https://api.m.jd.com/api?functionId=getUnionFreeCoupon&appid=u&loginType=2&_=${Date.now()}&body=${encodeURIComponent(JSON.stringify({"couponUrl":$.couponUrl,"source":20118}))}`,
+      url: `https://api.m.jd.com/api?functionId=getUnionFreeCoupon&appid=u&loginType=2&_=${Date.now()}&body={%22couponUrl%22:%22RhdnEUlBFEc8FBpAEUBoRUsaFBBrRR5BQhBtQhMRFhBpERtHFkA4FgYbHBNnHwYRCB1mEBMa%22,%22source%22:20118}`,
       headers: {
         "Host": "api.m.jd.com",
         "Accept": "application/json, text/plain, */*",
@@ -3308,7 +3273,4 @@ function Env(t, e) {
         (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t);
     }
   })(t, e);
-}
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
 }
