@@ -2,10 +2,10 @@
 /*
 [task_local]
 京豆夺宝
-40,45 23 * * * jd_duobao.js, tag=京豆夺宝, enabled=true
+40,45 0 * * * jd_duobao.js, tag=京豆夺宝, enabled=true
 ================Loon==============
 [Script]
-cron "40,45 23 * * *" script-path=jd_duobao.js,tag=京豆夺宝
+cron "40,45 0 * * *" script-path=jd_duobao.js,tag=京豆夺宝
 */
 const {Env} = require('./utils/magic');
 const $ = new Env('M京豆夺宝');
