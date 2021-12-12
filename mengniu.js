@@ -46,7 +46,7 @@ if ($.isNode()) {
                 continue
             }
             authorCodeList = [
-                '292a5a00a76343688b3a1d436d931aae',
+                'fe665d5cc5d34eb3b03d98329642e40e',
             ]
             $.bean = 0;
             $.ADID = getUUID('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 1);
@@ -54,7 +54,7 @@ if ($.isNode()) {
             // $.authorCode = authorCodeList[random(0, authorCodeList.length)]
             $.authorCode = ownCode ? ownCode : authorCodeList[random(0, authorCodeList.length)]
             $.authorNum = `${random(1000000, 9999999)}`
-            $.activityId = 'e319ac3cef964226a29eac2559f1cf57'
+            $.activityId = '4e3b9b6233104c199c0c44ff6edbc85d'
             $.activityShopId = '1000014803'
             $.activityUrl = `https://lzkjdz-isv.isvjcloud.com/pool/captain/${$.authorNum}?activityId=${$.activityId}&signUuid=${encodeURIComponent($.authorCode)}&adsource=null&shareuserid4minipg=null&shopid=${$.activityShopId}&lng=00.000000&lat=00.000000&sid=&un_area=`
             await anjia();
