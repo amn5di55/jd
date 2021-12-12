@@ -133,10 +133,10 @@ async function queryInteractiveRewardInfo(encryptProjectId, sourceCode, type) {
               if (data2.subCode == '0') {
                 for (let key of Object.keys(data2.assignmentList)) {
                   let vo = data2.assignmentList[key];
-                  if (sum >= 5) {
-                    if (vo.exchangeRate == 5) {
-                      for (let i = 0; i < Math.floor(sum / 5); i++) {
-                        console.log(`开始5魔方第${i + 1}次兑换`);
+                  if (sum >= 3) {
+                    if (vo.exchangeRate == 3) {
+                      for (let i = 0; i < Math.floor(sum / 3); i++) {
+                        console.log(`开始3魔方第${i + 1}次兑换`);
                         await doInteractiveAssignment($.config.giftConfig.projectId, vo.encryptAssignmentId, "acexinpin0823", 1);
                         await $.wait(1500);
                       }
