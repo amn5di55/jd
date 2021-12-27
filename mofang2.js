@@ -1,15 +1,19 @@
 /*
 京东集魔方
 by:小手冰凉 tg:@chianPLA
-交流群：https://t.me/jdPLA2
 脚本更新时间：2021-12-27 19:20
 脚本兼容: Node.js
 新手写脚本，难免有bug，能用且用。
-改自Aaron
 ===========================
+大势新品赏-集魔方
+入口：京东APP首页左上角-领京贴
+活动时间：2021年10月27日 – 1月1日24:00
+
+cron:22 0,20 27-31,1 12,1 *
+============Quantumultx===============
 [task_local]
-#京东集魔方
-31 2,8 * * * jd_mofang_j.js, tag=京东集魔方, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+#12.27~1.1 集魔方
+22 0,20 27-31,1 12,1 * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_desire.js, tag=12.27~1.1 集魔方, enabled=true
  */
 
 const $ = new Env('京东集魔方');
