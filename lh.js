@@ -163,7 +163,7 @@ async function signin2(user) {
             }
         }
         let res = await fetch(opts);
-        const reward_num2 = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num2 : 0
+        const reward_num2 = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num : 0
         $.log(`${$.doFlag[res?.data?.is_popup == 1]} ${res?.data?.is_popup == 1 ? '每日签到: 成功, 获得' + res?.data?.reward_info[0]?.reward_num + '分' : '每日签到: 今日已签到'}\n`);
         return reward_num2
     } catch (e) {
@@ -253,8 +253,8 @@ async function lotterySignin3(user) {
             type: 'post',
             dataType: "json",
             body: {
-                "component_no": "CQ09S56M11J1RAEF",
-                "activity_no": "AP258011N6GVNDNT"
+                "component_no": 'CQ09S56M11J1RAEF',
+                "activity_no": 'AP258011N6GVNDNT'
             }
         }
         let res = await fetch(opts);
@@ -283,8 +283,8 @@ async function lotteryClock3(user) {
             type: 'post',
             dataType: "json",
             body: {
-                "component_no": "CQ09S56M11J1RAEF",
-                "activity_no": "AP258011N6GVNDNT"
+                "component_no": 'CQ09S56M11J1RAEF',
+                "activity_no": 'AP258011N6GVNDNT'
                 "batch_no": 0
             }
         }
