@@ -163,9 +163,9 @@ async function signin2(user) {
             }
         }
         let res = await fetch(opts);
-        const reward_num = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num : 0
+        const reward_num2 = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num2 : 0
         $.log(`${$.doFlag[res?.data?.is_popup == 1]} ${res?.data?.is_popup == 1 ? '每日签到: 成功, 获得' + res?.data?.reward_info[0]?.reward_num + '分' : '每日签到: 今日已签到'}\n`);
-        return reward_num
+        return reward_num2
     } catch (e) {
         $.log(`⛔️ 每日签到失败！${e}\n`)
     }
