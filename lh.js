@@ -76,6 +76,10 @@ async function main() {
                 await lotterySignin(user)
                 // 抽奖
                 await lotteryClock(user)
+                // 老抽奖签到
+                await lotterySignin2(user)
+                // 老抽奖
+                await lotteryClock2(user)
                 //查询用户信息
                 const { nick_name, growth_value, level, head_portrait } = await getUserInfo(user)
                 //查询珑珠
@@ -187,6 +191,71 @@ async function lotteryClock(user) {
         $.log(`⛔️ 抽奖失败！${e}\n`)
     }
 }
+
+
+// 老抽奖签到
+async function lotterySignin2(user) {
+    try {
+        const opts = {
+            url: "https://gw2c-hw-open.longfor.com/lmarketing-task-api-mvc-prod/openapi/task/v1/lottery/sign",
+            headers: {
+                'cookie': user.cookie,
+                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
+                'x-lf-usertoken': user.token,
+                'x-gaia-api-key': 'c06753f1-3e68-437d-b592-b94656ea5517',
+                'x-lf-bu-code': user['x-lf-bu-code'],
+                'x-lf-channel': user['x-lf-channel'],
+                'origin': 'https://longzhu.longfor.com',
+                'referer': 'https://longzhu.longfor.com/'
+            },
+            type: 'post',
+            dataType: "json",
+            body: {
+                "task_id": "",
+                "activity_no": "11111111111735633282374092760000"
+            }
+        }
+        let res = await fetch(opts);
+        $.log(`${$.doFlag[res?.code == '0000']} ${res?.code == '0000' ? '老抽奖签到: 成功, 获得' + res?.data?.ticket_times + '次抽奖机会' : '老抽奖签到: ' + res?.message}\n`);
+    } catch (e) {
+        $.log(`⛔️ 老抽奖签到失败！${e}\n`)
+    }
+}
+// 老抽奖
+async function lotteryClock2(user) {
+    try {
+        const opts = {
+            url: "https://gw2c-hw-open.longfor.com/lmarketing-task-api-mvc-prod/openapi/task/v1/lottery/luck",
+            headers: {
+                'cookie': user.cookie,
+                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
+                'x-lf-usertoken': user.token,
+                'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
+                'x-gaia-api-key': 'c06753f1-3e68-437d-b592-b94656ea5517',
+                'x-lf-bu-code': user['x-lf-bu-code'],
+                'x-lf-channel': user['x-lf-channel'],
+                'origin': 'https://longzhu.longfor.com',
+                'referer': 'https://longzhu.longfor.com/',
+                'x-lf-dxrisk-source': user['x-lf-dxrisk-source']
+            },
+            type: 'post',
+            dataType: "json",
+            body: {
+                "task_id": "",
+                "time": getDateTime(),
+                "activity_no": "11111111111735633282374092760000",
+                "use_luck": 0
+            }
+        }
+        let res = await fetch(opts);
+        $.log(`${$.doFlag[res?.code == '0000']} ${res?.code == '0000' ? '老抽奖成功, 获得' + res?.data?.desc : '老抽奖: ' + res?.message}\n`);
+    } catch (e) {
+        $.log(`⛔️ 老抽奖失败！${e}\n`)
+    }
+}
+
+
+
 //查询用户信息
 async function getUserInfo(user) {
     try {
