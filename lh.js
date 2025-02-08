@@ -134,12 +134,14 @@ async function lotterySignin(user) {
             headers: {
                 'cookie': user.cookie,
                 'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
-                'x-lf-usertoken': user.token,
+                'x-lf-dxrisk-source': user['x-lf-dxrisk-source'],
+                'x-lf-dxrisk-token': user['x-lf-dxrisk-token']
                 'x-gaia-api-key': '2f9e3889-91d9-4684-8ff5-24d881438eaf',
-                'x-lf-bu-code': user['x-lf-bu-code'],
-                'x-lf-channel': user['x-lf-channel'],
-                'origin': 'https://longzhu.longfor.com',
-                'referer': 'https://longzhu.longfor.com/'
+                'bucode': user['x-lf-bu-code'],
+                'channel': user['x-lf-channel'],
+                'authtoken': user['x-lf-usertoken'],
+                'origin': 'https://llt.longfor.com',
+                'referer': 'https://llt.longfor.com/'
             },
             type: 'post',
             dataType: "json",
@@ -162,14 +164,14 @@ async function lotteryClock(user) {
             headers: {
                 'cookie': user.cookie,
                 'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
-                'x-lf-usertoken': user.token,
-                'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
+                'x-lf-dxrisk-source': user['x-lf-dxrisk-source'],
+                'x-lf-dxrisk-token': user['x-lf-dxrisk-token']
                 'x-gaia-api-key': '2f9e3889-91d9-4684-8ff5-24d881438eaf',
-                'x-lf-bu-code': user['x-lf-bu-code'],
-                'x-lf-channel': user['x-lf-channel'],
-                'origin': 'https://longzhu.longfor.com',
-                'referer': 'https://longzhu.longfor.com/',
-                'x-lf-dxrisk-source': user['x-lf-dxrisk-source']
+                'bucode': user['x-lf-bu-code'],
+                'channel': user['x-lf-channel'],
+                'authtoken': user['x-lf-usertoken'],
+                'origin': 'https://llt.longfor.com',
+                'referer': 'https://llt.longfor.com/'
             },
             type: 'post',
             dataType: "json",
