@@ -1,7 +1,7 @@
 /*
 ------------------------------------------
 @Author: Leiyiyan
-@Date: 2024-10-08 11:25:00
+@Date: 2025-02-09 1:49:00
 @Description: 龙湖天街小程序签到、抽奖
 ------------------------------------------
 获取 Cookie：打开龙湖天街小程序，进入 我的 - 签到赚珑珠 - 任务赚奖励 - 马上签到。
@@ -24,9 +24,12 @@ hostname = gw2c-hw-open.longfor.com
 6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
 7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 */
+const component_app = "CQ09S56M11J1RAEF";
+const activity_app = "AP258011N6GVNDNT";
 const component = "CK09N57J55N28XF0";
 const activity = "AP25W011M67ROK5Z";
 const activity_sign = "11111111111686241863606037740000";
+const activity_sign_app = "11111111111736501868255956070000";
 const $ = new Env("龙湖天街");
 const ckName = "lhtj_data";
 const userCookie = $.toObj($.isNode() ? process.env[ckName] : $.getdata(ckName)) || [];
@@ -71,18 +74,17 @@ async function main() {
 
             // 签到
             const reward_num = await signin(user);
-            // APP签到
-            const reward_num2 = await signin2(user);
-            const reward_num3 = reward_num + reward_num2
+			// APP签到
+			const reward_num2 = await signin2(user);
             if ($.ckStatus) {
                 // 抽奖签到
                 await lotterySignin(user)
                 // 抽奖
                 await lotteryClock(user)
-                // APP抽奖签到
-                await lotterySignin3(user)
-                // APP抽奖
-                await lotteryClock3(user)
+				//APP
+				await lotterySignin3(user)
+				//APP
+				await lotteryClock3(user)
                 // 老抽奖签到
                 await lotterySignin2(user)
                 // 老抽奖
@@ -92,7 +94,7 @@ async function main() {
                 //查询珑珠
                 const { balance } = await getBalance(user)
                 $.avatar = head_portrait;
-                $.title = `本次运行共获得${reward_num3}积分`
+                $.title = `本次运行共获得${reward_num}积分`
                 DoubleLog(`当前用户:${nick_name}\n成长值: ${growth_value}  等级: V${level}  珑珠: ${balance}`)
             } else {
                 DoubleLog(`⛔️ 「${user.userName ?? `账号${index}`}」check ck error!`)
@@ -145,7 +147,7 @@ async function signin2(user) {
             url: "https://gw2c-hw-open.longfor.com/lmarketing-task-api-mvc-prod/openapi/task/v1/signature/clock",
             headers: {
                 'cookie': user.cookie,
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 &MAIAWebKit_iOS_com.longfor.supera_1.10.2_202501191934_Default_3.2.4.2',
+                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
                 'token': user.token,
                 'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
                 'x-gaia-api-key': 'c06753f1-3e68-437d-b592-b94656ea5517',
@@ -159,17 +161,18 @@ async function signin2(user) {
             type: 'post',
             dataType: "json",
             body: {
-                'activity_no': '11111111111736501868255956070000'
+                'activity_no': activity_sign_app
             }
         }
         let res = await fetch(opts);
         const reward_num2 = res?.data?.is_popup == 1 ? res?.data?.reward_info[0]?.reward_num : 0
-        $.log(`${$.doFlag[res?.data?.is_popup == 1]} ${res?.data?.is_popup == 1 ? '每日签到: 成功, 获得' + res?.data?.reward_info[0]?.reward_num + '分' : '每日签到: 今日已签到'}\n`);
+        $.log(`${$.doFlag[res?.data?.is_popup == 1]} ${res?.data?.is_popup == 1 ? 'APP每日签到: 成功, 获得' + res?.data?.reward_info[0]?.reward_num + '分' : '每日签到: 今日已签到'}\n`);
         return reward_num2
     } catch (e) {
-        $.log(`⛔️ 每日签到失败！${e}\n`)
+        $.log(`⛔️ APP每日签到失败！${e}\n`)
     }
 }
+
 
 // 抽奖签到
 async function lotterySignin(user) {
@@ -233,14 +236,15 @@ async function lotteryClock(user) {
     }
 }
 
-// APP抽奖签到
+
+// app抽奖签到
 async function lotterySignin3(user) {
     try {
         const opts = {
             url: "https://gw2c-hw-open.longfor.com/llt-gateway-prod/api/v1/activity/auth/lottery/sign",
             headers: {
                 'cookie': user.cookie,
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 &MAIAWebKit_iOS_com.longfor.supera_1.10.2_202501191934_Default_3.2.4.2',
+                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
                 'x-lf-dxrisk-source': user['x-lf-dxrisk-source'],
                 'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
                 'x-gaia-api-key': '2f9e3889-91d9-4684-8ff5-24d881438eaf',
@@ -253,8 +257,8 @@ async function lotterySignin3(user) {
             type: 'post',
             dataType: "json",
             body: {
-                "component_no": 'CQ09S56M11J1RAEF',
-                "activity_no": 'AP258011N6GVNDNT'
+                "component_no": component_app,
+                "activity_no": activity_app
             }
         }
         let res = await fetch(opts);
@@ -270,7 +274,7 @@ async function lotteryClock3(user) {
             url: "https://gw2c-hw-open.longfor.com/llt-gateway-prod/api/v1/activity/auth/lottery/click",
             headers: {
                 'cookie': user.cookie,
-                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 &MAIAWebKit_iOS_com.longfor.supera_1.10.2_202501191934_Default_3.2.4.2',
+                'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.48(0x18003029) NetType/4G Language/zh_CN miniProgram/wx50282644351869da',
                 'x-lf-dxrisk-source': user['x-lf-dxrisk-source'],
                 'x-lf-dxrisk-token': user['x-lf-dxrisk-token'],
                 'x-gaia-api-key': '2f9e3889-91d9-4684-8ff5-24d881438eaf',
@@ -283,8 +287,8 @@ async function lotteryClock3(user) {
             type: 'post',
             dataType: "json",
             body: {
-                "component_no": 'CQ09S56M11J1RAEF',
-                "activity_no": 'AP258011N6GVNDNT'
+                "component_no": component_app,
+                "activity_no": activity_app,
                 "batch_no": 0
             }
         }
@@ -294,8 +298,6 @@ async function lotteryClock3(user) {
         $.log(`⛔️ APP抽奖失败！${e}\n`)
     }
 }
-
-
 
 
 // 老抽奖签到
