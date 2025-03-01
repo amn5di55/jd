@@ -86,9 +86,9 @@ async function main() {
 				//APP
 				await lotteryClock3(user)
                 // 老抽奖签到
-                await lotterySignin2(user)
+                //await lotterySignin2(user)
                 // 老抽奖
-                await lotteryClock2(user)
+                //await lotteryClock2(user)
                 //查询用户信息
                 const { nick_name, growth_value, level, head_portrait } = await getUserInfo(user)
                 //查询珑珠
