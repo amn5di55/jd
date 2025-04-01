@@ -24,8 +24,8 @@ hostname = gw2c-hw-open.longfor.com
 6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
 7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 */
-const component_app = "CQ09S56M11J1RAEF";
-const activity_app = "AP258011N6GVNDNT";
+const component_app = "CY19A13R3905O6QF";
+const activity_app = "AP257033I19CA8G8";
 const component = "CK09N57J55N28XF0";
 const activity = "AP25W011M67ROK5Z";
 const activity_sign = "11111111111686241863606037740000";
