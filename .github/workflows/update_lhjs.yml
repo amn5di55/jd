@@ -1,0 +1,66 @@
+name: Update lh.js Configuration
+
+on:
+  schedule:
+    - cron: '0 0 3 * *'  # 每天UTC时间0点运行（北京时间8点）
+  workflow_dispatch:     # 允许手动触发
+
+permissions:
+  contents: write  # 允许写入仓库
+
+jobs:
+  fetch-values:
+    runs-on: ubuntu-latest
+    outputs:
+      activity_no: ${{ steps.get-values.outputs.activity_no }}
+      component_no: ${{ steps.get-values.outputs.component_no }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    
+    - name: Install dependencies
+      run: pip install requests
+    
+    - name: Get required values
+      id: get-values
+      run: |
+        python get_values.py
+        ACTIVITY_NO=$(grep 'ACTIVITY_NO=' $GITHUB_OUTPUT | cut -d'=' -f2)
+        COMPONENT_NO=$(grep 'COMPONENT_NO=' $GITHUB_OUTPUT | cut -d'=' -f2)
+        echo "activity_no=$ACTIVITY_NO" >> $GITHUB_OUTPUT
+        echo "component_no=$COMPONENT_NO" >> $GITHUB_OUTPUT
+      env:
+        GITHUB_OUTPUT: ${{ github.workflow }}-output.txt
+
+  update-lhjs:
+    needs: fetch-values
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Update lh.js file
+      run: |
+        # 精确替换第27行component_app的值
+        sed -i "27s/const component_app = \".*\";/const component_app = \"${{ needs.fetch-values.outputs.component_no }}\";/" lh.js
+        
+        # 精确替换第28行activity_app的值
+        sed -i "28s/const activity_app = \".*\";/const activity_app = \"${{ needs.fetch-values.outputs.activity_no }}\";/" lh.js
+        
+        # 显示修改后的内容（用于调试）
+        echo "修改后的lh.js 27-28行:"
+        sed -n '27,28p' lh.js
+        
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add lh.js
+        git diff --cached --quiet || git commit -m "自动更新: 替换component_app和activity_app值"
+        git push
