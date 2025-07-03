@@ -26,8 +26,8 @@ hostname = gw2c-hw-open.longfor.com
 */
 const component_app = "CO15400F29R2ZFJZ";
 const activity_app = "AP25K062Q6YYQ7FX";
-const component = "CR14T05T01P4HSSN";
-const activity = "AP25P053E0MQAECS";
+const component = "C216G18R54O4HQVV";
+const activity = "AP25N062U6LDDSKR";
 const activity_sign = "11111111111686241863606037740000";
 const activity_sign_app = "11111111111736501868255956070000";
 const $ = new Env("龙湖天街");
