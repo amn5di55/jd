@@ -26,7 +26,7 @@ hostname = gw2c-hw-open.longfor.com
 */
 const component_app = "CC13U47045E3262G";
 const activity_app = "AP25I123Y1CKKXSL";
-const component = "CB09T56Q24S9JLZ3";
+const component = "CO13545A08P7EI9Y";
 const activity = "AP25O123K1HEE8DB";
 const activity_sign = "11111111111686241863606037740000";
 const activity_sign_app = "11111111111736501868255956070000";
