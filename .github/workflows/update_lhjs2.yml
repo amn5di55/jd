@@ -2,7 +2,7 @@ name: Update lh.js Configuration 2
 
 on:
   schedule:
-    - cron: '0 1 3 * *'  # 每天UTC时间0点运行（北京时间8点）
+    - cron: '0 1 3 * *'  # 每天UTC时间1点运行（北京时间9点）
   workflow_dispatch:     # 允许手动触发
 
 permissions:
@@ -45,16 +45,29 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
+    - name: Set Beijing Time
+      id: beijing-time
+      run: |
+        # 获取当前北京时间（UTC+8）
+        BEIJING_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+        echo "beijing_time=$BEIJING_TIME" >> $GITHUB_OUTPUT
+        echo "Current Beijing time: $BEIJING_TIME"
+      
     - name: Update lh.js file
       run: |
-        # 精确替换第27行component_app的值
+        # 精确替换第4行的日期时间
+        sed -i "4s/@Date: .*/@Date: ${{ steps.beijing-time.outputs.beijing_time }}/" lh.js
+        
+        # 精确替换第29行component的值
         sed -i "29s/const component = \".*\";/const component = \"${{ needs.fetch-values.outputs.component_no }}\";/" lh.js
         
-        # 精确替换第28行activity_app的值
+        # 精确替换第30行activity的值
         sed -i "30s/const activity = \".*\";/const activity = \"${{ needs.fetch-values.outputs.activity_no }}\";/" lh.js
         
         # 显示修改后的内容（用于调试）
-        echo "修改后的lh.js 27-28行:"
+        echo "修改后的lh.js 第4行:"
+        sed -n '4p' lh.js
+        echo "修改后的lh.js 29-30行:"
         sed -n '29,30p' lh.js
         
     - name: Commit and push changes
@@ -62,5 +75,5 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add lh.js
-        git diff --cached --quiet || git commit -m "自动更新: 替换component和activity值"
+        git diff --cached --quiet || git commit -m "自动更新2: 替换component和activity值 [北京时间: ${{ steps.beijing-time.outputs.beijing_time }}]"
         git push
