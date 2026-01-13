@@ -45,8 +45,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
+    - name: Set Beijing Time
+      id: beijing-time
+      run: |
+        # 获取当前北京时间（UTC+8）
+        BEIJING_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+        echo "beijing_time=$BEIJING_TIME" >> $GITHUB_OUTPUT
+        echo "Current Beijing time: $BEIJING_TIME"
+      
     - name: Update lh.js file
       run: |
+        # 精确替换第4行的日期时间
+        sed -i "4s/@Date: .*/@Date: ${{ steps.beijing-time.outputs.beijing_time }}/" lh.js
+        
         # 精确替换第27行component_app的值
         sed -i "27s/const component_app = \".*\";/const component_app = \"${{ needs.fetch-values.outputs.component_no }}\";/" lh.js
         
@@ -54,6 +65,8 @@ jobs:
         sed -i "28s/const activity_app = \".*\";/const activity_app = \"${{ needs.fetch-values.outputs.activity_no }}\";/" lh.js
         
         # 显示修改后的内容（用于调试）
+        echo "修改后的lh.js 第4行:"
+        sed -n '4p' lh.js
         echo "修改后的lh.js 27-28行:"
         sed -n '27,28p' lh.js
         
@@ -62,5 +75,5 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add lh.js
-        git diff --cached --quiet || git commit -m "自动更新: 替换component_app和activity_app值"
+        git diff --cached --quiet || git commit -m "自动更新: 替换component_app和activity_app值 [北京时间: ${{ steps.beijing-time.outputs.beijing_time }}]"
         git push
