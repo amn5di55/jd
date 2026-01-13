@@ -75,9 +75,9 @@ def get_required_values():
     regex_matches = re.findall(r'\\"component_no\\":\\"([^\\"]*)\\"', info_response.text)
     
     if len(all_component_nos) >= 3:
-        component_no = all_component_nos[1]
+        component_no = all_component_nos[2]
     elif len(regex_matches) >= 3:
-        component_no = regex_matches[1]
+        component_no = regex_matches[2]
     else:
         raise Exception("无法找到第三个component_no字段")
     
