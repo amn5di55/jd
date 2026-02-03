@@ -1,7 +1,7 @@
 /*
 ------------------------------------------
 @Author: Leiyiyan
-@Date: 2026-01-13 11:17:07
+@Date: 2026-02-03 09:21:45
 @Description: 龙湖天街小程序签到、抽奖
 ------------------------------------------
 获取 Cookie：打开龙湖天街小程序，进入 我的 - 签到赚珑珠 - 任务赚奖励 - 马上签到。
@@ -24,8 +24,8 @@ hostname = gw2c-hw-open.longfor.com
 6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
 7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 */
-const component_app = "CU15A06D41Y9ZECJ";
-const activity_app = "AP260010Y6WP4KCV";
+const component_app = "CV16H24J49G1KERU";
+const activity_app = "AP266012H9Q69JHI";
 const component = "CO13545A08P7EI9Y";
 const activity = "AP25O123K1HEE8DB";
 const activity_sign = "11111111111686241863606037740000";
