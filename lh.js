@@ -78,9 +78,9 @@ async function main() {
 			const reward_num2 = await signin2(user);
             if ($.ckStatus) {
                 // 抽奖签到
-                await lotterySignin(user)
+                //await lotterySignin(user)
                 // 抽奖
-                await lotteryClock(user)
+                //await lotteryClock(user)
 				//APP
 				await lotterySignin3(user)
 				//APP
