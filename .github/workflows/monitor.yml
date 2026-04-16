@@ -1,0 +1,28 @@
+name: Education Notice Monitor
+
+on:
+  schedule:
+    # 定时任务：这里设置的是每天北京时间 8:00 和 17:00 执行
+    # 注意：GitHub Actions 使用 UTC 时间，北京时间 = UTC + 8
+    # 所以 UTC 0 对应北京 8 点，UTC 9 对应北京 17 点。你可以根据需要修改。
+    - cron: '0 0,9 * * *'
+  workflow_dispatch: # 允许在 GitHub 网页端手动点击运行测试
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码 (Checkout Repository)
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js 环境 (Setup Node.js)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # 你的代码使用了原生 fetch，Node 18+ 才支持，这里直接用 20
+
+      - name: 运行监控脚本 (Run Monitor Script)
+        env:
+          # 将 GitHub Secrets 中的值注入到 Node.js 的环境变量中
+          BARK_TOKEN: ${{ secrets.BARK_TOKEN }}
+        run: node monitor.js
